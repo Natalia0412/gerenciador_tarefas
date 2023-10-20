@@ -1,4 +1,4 @@
-package com.example.gerenciadordetarefas.model.user;
+package com.example.gerenciadordetarefas.model.project;
 
 import com.example.gerenciadordetarefas.model.task.Task;
 import lombok.Builder;
@@ -8,17 +8,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document
-@Builder
 @Data
-public class User  {
+@Builder
+@Document
+public class Project {
+
     @Id
     private String id;
-
     private String name;
-
-    private List<Task> assignedTasks;
-
+    private String description;
+    private List<Task> taskList;
 
 
 

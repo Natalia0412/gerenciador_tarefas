@@ -1,35 +1,44 @@
 package com.example.gerenciadordetarefas.service.task;
 
 import com.example.gerenciadordetarefas.dto.task.TaskDto;
-import com.example.gerenciadordetarefas.model.department.Department;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.task.TaskRepository;
-import com.example.gerenciadordetarefas.service.department.DepartmentService;
 import com.example.gerenciadordetarefas.service.user.UserService;
-import com.example.gerenciadordetarefas.util.mapper.TaskMapper;
+import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
+import com.example.gerenciadordetarefas.util.mapper.task.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
-
+    private final UserService userService;
     @Autowired
-    private UserService userService;
+    public TaskService(@Lazy UserService userService) {
+        this.userService = userService;
+    }
 
-    @Autowired
-    private DepartmentService departmentService;
+
 
     public Task createTask(TaskDto taskDto) {
-        User user = userService.getUserById(taskDto.getAssigne());
-        Department  department = departmentService.returnDepartment(taskDto.getDepartment());
-        Task task = TaskMapper.taskDtoToTask(taskDto,department, user);
+        Task task = TaskMapper.taskDtoToTask(taskDto);
+        List<String>assigne = taskDto.getAssigne();
+        assigne.forEach(id -> {
+            User user = userService.getUserById(id);
+            task.getAssigne().add(user);
+        });
         return taskRepository.save(task);
     }
 
-    public Department foundDepartment(String id) {
-        return departmentService.returnDepartment(id);
+
+
+    public Task getTaskById(String id) {
+        return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task não encontrada", id));
     }
+
 }

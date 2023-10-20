@@ -3,12 +3,10 @@ package com.example.gerenciadordetarefas.controller.user;
 import com.example.gerenciadordetarefas.dto.user.UserDto;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.service.user.UserService;
-import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -18,11 +16,26 @@ public class UserController {
 
     @PostMapping
     public User addUser(@RequestBody UserDto userDto)  {
-
         User user = userService.createUser(userDto);
         return  user;
 
+    }
 
+    @PutMapping("/{id}")
+    public User alterUser(@RequestBody UserDto userDto, @PathVariable String id){
+        return userService.updateUser(userDto,id);
+    }
+
+    @GetMapping("/{id}")
+    public void getByIdUser(@PathVariable String id){
+        System.out.println(id);
+        //return userService.updateUser(userDto,id);
+    }
+
+
+    @GetMapping
+    public List<User> getUser(){
+        return userService.getAllUser();
     }
 
 //    @PostMapping

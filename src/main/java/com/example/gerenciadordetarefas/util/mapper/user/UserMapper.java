@@ -2,15 +2,18 @@ package com.example.gerenciadordetarefas.util.mapper.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
 import com.example.gerenciadordetarefas.model.department.Department;
+import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMapper {
 
-    public static User userDtoToUSer(UserDto userDto, Department department) {
-
+    public static User userDtoToUser(UserDto userDto) {
        return User.builder()
                .name(userDto.getName())
-               .department(department)
+               .assignedTasks(new ArrayList<>())
                .build();
     }
 
@@ -20,6 +23,8 @@ public class UserMapper {
 //                .department(user.getDepartment())
 //                .build();
 //    }
+
+
 
 
 
