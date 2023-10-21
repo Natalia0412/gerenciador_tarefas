@@ -5,6 +5,7 @@ import com.example.gerenciadordetarefas.model.project.Project;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.repository.project.ProjectRepository;
 import com.example.gerenciadordetarefas.service.task.TaskService;
+import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
 import com.example.gerenciadordetarefas.util.mapper.project.ProjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,16 +23,35 @@ public class ProjectService {
     public Project createProject(ProjectDto projectDto){
 
         Project project = ProjectMapper.projectDtoToProject(projectDto);
+        if(projectDto.getAssignedTasks() != null){
+            this.addToAssignedTask(projectDto, project);
+        }
+        projectRepository.save(project);
+        return project;
 
+    }
+
+    public Project updateProject(ProjectDto projectDto, String id){
+        this.getProjectById(id);
+        Project project = ProjectMapper.projectDtoToProject(projectDto);
+        this.addToAssignedTask(projectDto, project);
+        project.setId(id);
+        return projectRepository.save(project);
+
+    }
+
+    public Project getProjectById(String id){
+      Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project with id: " + id + " not found, id: " , id));
+        return project;
+    }
+
+    public Project addToAssignedTask(ProjectDto projectDto, Project project){
         List<String> assignedTasks = projectDto.getAssignedTasks();
-
         assignedTasks.forEach(id -> {
             Task task = taskService.getTaskById(id);
             project.getTaskList().add(task);
         });
-        projectRepository.save(project);
         return project;
-
     }
 
 

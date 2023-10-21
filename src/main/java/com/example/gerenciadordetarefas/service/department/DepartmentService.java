@@ -22,7 +22,10 @@ public class DepartmentService {
 
     public Department createDepartment(DepartmentDto dto){
         Department department =  DepartmentMapper.departmentDtoToDepartment(dto);
-        this.addToUsers(dto, department);
+        if(dto.getUsers()!=null){
+            this.addToUsers(dto, department);
+        }
+
         return departmentRepository.save(department);
     }
 

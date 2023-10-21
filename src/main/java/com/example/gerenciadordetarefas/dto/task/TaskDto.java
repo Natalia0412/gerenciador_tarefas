@@ -4,6 +4,7 @@ import com.example.gerenciadordetarefas.model.department.Department;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class TaskDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dueDate;
     private String priority;
+    @NotNull(message = "Assigne is mandatory")
     private List<String> assigne ;
     //private String department;
 

@@ -28,7 +28,9 @@ public class UserService {
 
     public  User createUser(UserDto userDto)  {
         User user = UserMapper.userDtoToUser(userDto);
-        this.addToTaskList(userDto, user);
+        if(userDto.getAssignedTasks() != null){
+            this.addToTaskList(userDto, user);
+        }
         userRepository.save(user);
         return user;
     }
