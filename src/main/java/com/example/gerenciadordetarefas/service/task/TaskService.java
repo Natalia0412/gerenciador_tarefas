@@ -27,18 +27,32 @@ public class TaskService {
 
     public Task createTask(TaskDto taskDto) {
         Task task = TaskMapper.taskDtoToTask(taskDto);
+
+        this.addToAssigne(taskDto, task);
+
+        return taskRepository.save(task);
+    }
+
+    public Task updateTask(TaskDto dto, String id) {
+        this.getTaskById(id);
+        Task task = TaskMapper.taskDtoToTask(dto);
+        this.addToAssigne(dto, task);
+        task.setId(id);
+        return taskRepository.save(task);
+    }
+
+    public Task addToAssigne(TaskDto taskDto, Task task){
         List<String>assigne = taskDto.getAssigne();
         assigne.forEach(id -> {
             User user = userService.getUserById(id);
             task.getAssigne().add(user);
         });
-        return taskRepository.save(task);
+        return task;
     }
-
-
 
     public Task getTaskById(String id) {
-        return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task não encontrada", id));
+        return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found, id: ", id));
     }
+
 
 }

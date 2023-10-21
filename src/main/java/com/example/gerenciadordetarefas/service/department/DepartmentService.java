@@ -22,13 +22,28 @@ public class DepartmentService {
 
     public Department createDepartment(DepartmentDto dto){
         Department department =  DepartmentMapper.departmentDtoToDepartment(dto);
-        System.out.println(dto.getUsers());
+        if(dto.getUsers()!=null){
+            this.addToUsers(dto, department);
+        }
+
+        return departmentRepository.save(department);
+    }
+
+    public Department updateDepartment(DepartmentDto dto, String id) {
+        this.getDepartmentById(id);
+        Department department =  DepartmentMapper.departmentDtoToDepartment(dto);
+        this.addToUsers(dto,department);
+        department.setId(id);
+        return departmentRepository.save(department);
+    }
+
+    public Department addToUsers(DepartmentDto dto, Department department){
         List<String> idsUsers = dto.getUsers();
         idsUsers.forEach(id -> {
             User user = userService.getUserById(id);
             department.getUsers().add(user);
         });
-        return departmentRepository.save(department);
+        return department;
     }
 
 
