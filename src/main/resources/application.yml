@@ -1,5 +1,4 @@
 spring:
   data:
     mongodb:
-      uri: mongodb+srv://nataliaBarros:14n2016@gerenciadordetarefas.mwfo8de.mongodb.net/gerenciadorDeTarefas?retryWrites=true&w=majority
-
+      uri: mongodb+srv://${USER_NAME}:${PASSWORD}@gerenciadordetarefas.mwfo8de.mongodb.net/${BD}?retryWrites=true&w=majority
