@@ -27,9 +27,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public void getByIdUser(@PathVariable String id){
-        System.out.println(id);
-        //return userService.updateUser(userDto,id);
+    public User getByIdUser(@PathVariable String id){
+        //System.out.println(id);
+        return userService.getUserById(id);
     }
 
 
@@ -38,6 +38,10 @@ public class UserController {
         return userService.getAllUser();
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable String id){
+        userService.deleteUserById(id);
+    }
 //    @PostMapping
 //    public User addUser(@RequestBody User userDto) {
 //

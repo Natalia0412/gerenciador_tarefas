@@ -66,6 +66,12 @@ public class UserService {
         return user;
     }
 
+    public void deleteUserById(String id){
+        this.getUserById(id);
+        userRepository.deleteById(id);
+    }
+
+
     public User checkIfUserAlreadyHasATask(UserDto userDto, String id) {
         User user = this.getUserById(id);
 

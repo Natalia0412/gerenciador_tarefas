@@ -54,5 +54,10 @@ public class TaskService {
         return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found, id: ", id));
     }
 
+    public void deleteTask(String id){
+        this.getTaskById(id);
+        taskRepository.deleteById(id);
+    }
+
 
 }
