@@ -40,8 +40,11 @@ public class ProjectService {
 
     }
 
+    public List<Project> getAllProject(){
+        return projectRepository.findAll();
+    }
     public Project getProjectById(String id){
-      Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project with id: " + id + " not found, id: " , id));
+      Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project not found with id: " , id));
         return project;
     }
 
@@ -54,7 +57,10 @@ public class ProjectService {
         return project;
     }
 
-
+    public void deleteProject(String id) {
+        this.getProjectById(id);
+        projectRepository.deleteById(id);
+    }
 
 
 }

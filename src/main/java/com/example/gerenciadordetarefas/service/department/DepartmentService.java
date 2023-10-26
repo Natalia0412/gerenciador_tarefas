@@ -52,4 +52,13 @@ public class DepartmentService {
         if(department.isEmpty()) throw new ResourceNotFoundException("Department not found with id: ", id);
         return  department.get();
     }
+
+    public List<Department> getAllDepartment(){
+        return departmentRepository.findAll();
+    }
+
+    public void deleteDepartment(String id) {
+        this.getDepartmentById(id);
+        departmentRepository.deleteById(id);
+    }
 }
