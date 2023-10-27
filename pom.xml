@@ -38,11 +38,21 @@
 <!--&lt;!&ndash;			<scope>runtime</scope>&ndash;&gt;-->
 <!--&lt;!&ndash;			<optional>true</optional>&ndash;&gt;-->
 <!--		</dependency>-->
+		<!-- test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/de.flapdoodle.embed/de.flapdoodle.embed.mongo -->
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo</artifactId>
+			<version>4.9.2</version>
+			<scope>test</scope>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring -->
 		<dependency>
 			<groupId>org.modelmapper.extensions</groupId>
