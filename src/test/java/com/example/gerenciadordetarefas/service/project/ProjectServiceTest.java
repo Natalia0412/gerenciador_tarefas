@@ -5,6 +5,8 @@ import com.example.gerenciadordetarefas.model.project.Project;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.repository.project.ProjectRepository;
 import com.example.gerenciadordetarefas.service.task.TaskService;
+import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -183,6 +185,21 @@ class ProjectServiceTest {
     void deleteProject() {
         service.deleteProject(PROJECT_ID_1);
         verify(repository, times(1)).deleteById(PROJECT_ID_1);
+
+    }
+
+    @Test
+    @DisplayName("Lançar erro de project não encontrado ")
+    void testExpectedException() {
+
+        String id = "1";
+        ResourceNotFoundException thrown = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            service.getProjectById(id);
+        });
+
+        Assertions.assertEquals("Project not found with id: "+ id ,
+                thrown.getMessage());
+
 
     }
 }

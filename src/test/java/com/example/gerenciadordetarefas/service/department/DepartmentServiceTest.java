@@ -6,6 +6,8 @@ import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.department.DepartmentRepository;
 import com.example.gerenciadordetarefas.service.user.UserService;
+import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -195,5 +197,20 @@ class DepartmentServiceTest {
     void deleteDepartment() {
         departmentService.deleteDepartment(DPTO_ID_1);
         verify(departmentRepository, times(1)).deleteById(DPTO_ID_1);
+    }
+
+    @Test
+    @DisplayName("Lançar erro de department não encontrado ")
+    void testExpectedException() {
+
+        String id = "1";
+        ResourceNotFoundException thrown = Assertions.assertThrows(ResourceNotFoundException.class, () -> {
+            departmentService.getDepartmentById(id);
+        });
+
+        Assertions.assertEquals("Department not found with id: "+ id ,
+                thrown.getMessage());
+
+
     }
 }
