@@ -1,6 +1,7 @@
 package com.example.gerenciadordetarefas.service.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
+import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.user.UserRepository;
@@ -26,13 +27,13 @@ public class UserService {
 
 
 
-    public  User createUser(UserDto userDto)  {
+    public UserDtoResponse createUser(UserDto userDto)  {
         User user = UserMapper.userDtoToUser(userDto);
         if(userDto.getAssignedTasks() != null){
             this.addToTaskList(userDto, user);
         }
         userRepository.save(user);
-        return user;
+        return UserMapper.userToUserDtoResponse(user);
     }
 
     public User updateUser(UserDto userDto, String id){

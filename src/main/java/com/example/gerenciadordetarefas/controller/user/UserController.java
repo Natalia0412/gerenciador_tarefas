@@ -1,9 +1,13 @@
 package com.example.gerenciadordetarefas.controller.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
+import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +19,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public User addUser(@RequestBody UserDto userDto)  {
-        User user = userService.createUser(userDto);
-        return  user;
+    public ResponseEntity<UserDtoResponse> addUser(@RequestBody UserDto userDto)  {
+        UserDtoResponse userDtoResponse = userService.createUser(userDto);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(userDtoResponse);
 
     }
 
