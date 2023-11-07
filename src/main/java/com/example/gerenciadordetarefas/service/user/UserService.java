@@ -1,6 +1,7 @@
 package com.example.gerenciadordetarefas.service.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
+import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.user.UserRepository;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -26,35 +26,40 @@ public class UserService {
 
 
 
-    public  User createUser(UserDto userDto)  {
+    public UserDtoResponse createUser(UserDto userDto)  {
         User user = UserMapper.userDtoToUser(userDto);
         if(userDto.getAssignedTasks() != null){
             this.addToTaskList(userDto, user);
         }
         userRepository.save(user);
-        return user;
+        return UserMapper.userToUserDtoResponse(user);
     }
 
-    public User updateUser(UserDto userDto, String id){
+    public UserDtoResponse updateUser(UserDto userDto, String id){
         this.getUserById(id);
         User user = UserMapper.userDtoToUser(userDto);
         this.addToTaskList(userDto,user);
         user.setId(id);
         userRepository.save(user);
-        return user;
+        return UserMapper.userToUserDtoResponse(user);
     }
 
 
 
 
     public User getUserById(String id) {
-        User user = userRepository.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found, id: ", id));
-        return user;
     }
 
-    public List<User> getAllUser(){
-        return userRepository.findAll();
+    public UserDtoResponse getUserByIdResponse(String id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found, id: ", id));
+
+        return UserMapper.userToUserDtoResponse(user);
+    }
+    public List<UserDto> getAllUser(){
+        return UserMapper.userToUserDtoResponseGetAll(userRepository.findAll());
     }
 
     public User addToTaskList(UserDto userDto, User user){

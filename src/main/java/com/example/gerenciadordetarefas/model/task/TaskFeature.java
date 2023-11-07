@@ -13,15 +13,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@TypeAlias("TaskFeature")
+
 public class TaskFeature extends Task {
     private FeatureType featureType;
 
     TaskFeature(String id, String title, String description, LocalDate dateOfCreation, LocalDate dueDate, String priority, List<User> assigne) {
         super(id, title, description, dateOfCreation, dueDate, priority, assigne);
     }
-    //private LocalDate  realTimeSpent;
-    //private LocalDate estimatedTime;
+    private LocalDate  realTimeSpent;
+    private LocalDate estimatedTime;
 
 
 
