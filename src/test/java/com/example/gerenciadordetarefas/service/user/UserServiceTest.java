@@ -166,6 +166,20 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Verificar se o objeto User com id= ? está sendo retornado pois esse é o da controller")
+    void getUserByIdResponse(){
+        userService.getUserById(USER_ID_1);
+
+        User expectedUser = User.builder()
+                .id(USER_ID_1)
+                .name("Jose Doe")
+                .assignedTasks(Collections.singletonList(createTask1()))
+                .build();
+        verify(userRepository, times(1)).findById(USER_ID_1);
+        assertEquals(expectedUser, userTest());
+    }
+
+    @Test
     @DisplayName("Retornar uma lista de usuários")
     void getAllUser() {
         userService.getAllUser();
