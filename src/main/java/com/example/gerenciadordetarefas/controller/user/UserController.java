@@ -2,11 +2,9 @@ package com.example.gerenciadordetarefas.controller.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
 import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
-import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,29 +24,26 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User alterUser(@RequestBody UserDto userDto, @PathVariable String id){
-        return userService.updateUser(userDto,id);
+    public ResponseEntity<UserDtoResponse> alterUser(@RequestBody UserDto userDto, @PathVariable String id){
+        UserDtoResponse userDtoResponse = userService.updateUser(userDto,id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDtoResponse);
     }
 
     @GetMapping("/{id}")
-    public User getByIdUser(@PathVariable String id){
-        //System.out.println(id);
-        return userService.getUserById(id);
+    public ResponseEntity<UserDtoResponse> getByIdUser(@PathVariable String id){
+        UserDtoResponse userDtoResponse = userService.getUserByIdResponse(id);
+        return ResponseEntity.ok().body(userDtoResponse);
     }
 
-
     @GetMapping
-    public List<User> getUser(){
-        return userService.getAllUser();
+    public ResponseEntity<List<UserDto>>getUser(){
+        return ResponseEntity.ok(userService.getAllUser());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable String id){
+    public ResponseEntity<?> deleteUser(@PathVariable String id){
         userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
-//    @PostMapping
-//    public User addUser(@RequestBody User userDto) {
-//
-//        return userService.createUser(userDto);
-//    }
+
 }

@@ -2,7 +2,6 @@ package com.example.gerenciadordetarefas.util.mapper.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
 import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
-import com.example.gerenciadordetarefas.model.department.Department;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 
@@ -13,12 +12,12 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     public static User userDtoToUser(UserDto userDto) {
-       return User.builder()
-               .name(userDto.getName())
-               .assignedTasks(new ArrayList<>())
-               .build();
+        return User.builder()
+                .name(userDto.getName())
+                .assignedTasks(new ArrayList<>())
+                .build();
     }
-    
+
     public static UserDtoResponse userToUserDtoResponse(User user){
         return UserDtoResponse.builder()
                 .id(user.getId())
@@ -30,6 +29,16 @@ public class UserMapper {
 
     public static List<String> idtaskList(User user) {
         return user.getAssignedTasks().stream().map(Task::getId).collect(Collectors.toList());
+    }
+
+    public static List<UserDto> userToUserDtoResponseGetAll(List<User> users){
+        return users.stream()
+                .map(user -> UserDto.builder()
+                        .name(user.getName())
+                        .assignedTasks(user.getAssignedTasks().stream().map(Task::getTitle).collect(Collectors.toList()))
+                        .build()
+                ).collect(Collectors.toList());
+
     }
 
 
