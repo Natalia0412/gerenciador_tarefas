@@ -1,9 +1,12 @@
 package com.example.gerenciadordetarefas.controller.project;
 
 import com.example.gerenciadordetarefas.dto.project.ProjectDto;
+import com.example.gerenciadordetarefas.dto.project.ProjectDtoResponse;
 import com.example.gerenciadordetarefas.model.project.Project;
 import com.example.gerenciadordetarefas.service.project.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,29 +17,32 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
     @PostMapping
-    public Project addProject(@RequestBody ProjectDto dto){
-
-        return projectService.createProject(dto);
+    public ResponseEntity<ProjectDtoResponse> addProject(@RequestBody ProjectDto dto){
+        ProjectDtoResponse projectDtoResponse = projectService.createProject(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectDtoResponse);
     }
 
     @PutMapping("/{id}")
-    public Project alterProject(@RequestBody ProjectDto dto, @PathVariable String id){
-        return projectService.updateProject(dto, id);
+    public ResponseEntity<ProjectDtoResponse> alterProject(@RequestBody ProjectDto dto, @PathVariable String id){
+        ProjectDtoResponse projectDtoResponse = projectService.updateProject(dto, id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(projectDtoResponse);
     }
 
     @GetMapping("/{id}")
-    public Project getById(@PathVariable String id){
-        return projectService.getProjectById(id);
+    public ResponseEntity<ProjectDtoResponse> getById(@PathVariable String id){
+        ProjectDtoResponse projectDtoResponse = projectService.getProjectByIdResponse(id);
+        return ResponseEntity.ok(projectDtoResponse);
     }
 
     @GetMapping()
-    public List<Project> returnAllProjects(){
-        return projectService.getAllProject();
+    public  ResponseEntity<List<ProjectDtoResponse>>returnAllProjects(){
+        return ResponseEntity.ok(projectService.getAllProject());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProjectById(@PathVariable String id){
+    public ResponseEntity<?> deleteProjectById(@PathVariable String id){
         this.projectService.deleteProject(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
