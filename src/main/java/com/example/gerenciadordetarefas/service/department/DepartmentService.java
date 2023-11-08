@@ -1,6 +1,7 @@
 package com.example.gerenciadordetarefas.service.department;
 
 import com.example.gerenciadordetarefas.dto.department.DepartmentDto;
+import com.example.gerenciadordetarefas.dto.department.DepartmentDtoResponse;
 import com.example.gerenciadordetarefas.model.department.Department;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.department.DepartmentRepository;
@@ -20,21 +21,22 @@ public class DepartmentService {
     @Autowired
     private UserService userService;
 
-    public Department createDepartment(DepartmentDto dto){
+    public DepartmentDtoResponse createDepartment(DepartmentDto dto){
         Department department =  DepartmentMapper.departmentDtoToDepartment(dto);
         if(dto.getUsers()!=null){
             this.addToUsers(dto, department);
         }
-
-        return departmentRepository.save(department);
+        departmentRepository.save(department);
+        return DepartmentMapper.departmentToDepartmentDtoResponse(department);
     }
 
-    public Department updateDepartment(DepartmentDto dto, String id) {
+    public DepartmentDtoResponse updateDepartment(DepartmentDto dto, String id) {
         this.getDepartmentById(id);
         Department department =  DepartmentMapper.departmentDtoToDepartment(dto);
         this.addToUsers(dto,department);
         department.setId(id);
-        return departmentRepository.save(department);
+        departmentRepository.save(department);
+        return DepartmentMapper.departmentToDepartmentDtoResponse(department);
     }
 
     public Department addToUsers(DepartmentDto dto, Department department){
@@ -53,8 +55,14 @@ public class DepartmentService {
         return  department.get();
     }
 
-    public List<Department> getAllDepartment(){
-        return departmentRepository.findAll();
+    public  DepartmentDtoResponse getDepartmentByIdResponse(String id)  {
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: ", id));
+        return DepartmentMapper.departmentToDepartmentDtoResponse(department);
+    }
+
+    public List<DepartmentDtoResponse> getAllDepartment(){
+        return DepartmentMapper.departmentToDepartmentDtoResponse( departmentRepository.findAll());
     }
 
     public void deleteDepartment(String id) {

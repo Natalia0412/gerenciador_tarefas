@@ -168,7 +168,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Verificar se o objeto User com id= ? está sendo retornado pois esse é o da controller")
     void getUserByIdResponse(){
-        userService.getUserById(USER_ID_1);
+        userService.getUserByIdResponse(USER_ID_1);
 
         User expectedUser = User.builder()
                 .id(USER_ID_1)
