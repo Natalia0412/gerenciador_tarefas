@@ -25,6 +25,40 @@ public class TaskMapper {
                 .build();
     }
 
+    public static TaskDtoResponse taskToTaskDtoResponse(Task task) {
+        return TaskDtoResponse.builder()
+                .id(task.getId())
+                .title(task.getTitle())
+                .dateOfCreation(task.getDateOfCreation())
+                .dueDate(task.getDueDate())
+                .priority(task.getPriority())
+                .assigne(task.getAssigne().stream()
+                        .map(user -> UserInfoDto.builder()
+                                .id(user.getId())
+                                .name(user.getName())
+                                .build()
+                        ).toList()
+                )
+                .build();
+    }
+    public static List<TaskDtoResponse> taskToTaskDtoResponse(List<Task> tasks) {
+        return tasks.stream()
+                .map(task -> TaskDtoResponse.builder()
+                        .title(task.getTitle())
+                        .dateOfCreation(task.getDateOfCreation())
+                        .dueDate(task.getDueDate())
+                        .priority(task.getPriority())
+                        .assigne(task.getAssigne().stream()
+                                .map(user -> UserInfoDto.builder()
+                                        .name(user.getName())
+                                        .build()
+                                ).toList()
+                        )
+                        .build()
+                )
+                .toList();
+    }
+
 //    public static TaskDtoResponse taskToTaskDtoResponse(Task task) {
 //        return TaskDtoResponse.builder()
 //                .id(task.getId())
