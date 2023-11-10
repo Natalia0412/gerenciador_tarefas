@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class TaskDtoResponse {
     private String id;
     private String title;
+    private String description;
     private LocalDate dateOfCreation;
     private LocalDate dueDate;
     private String priority;

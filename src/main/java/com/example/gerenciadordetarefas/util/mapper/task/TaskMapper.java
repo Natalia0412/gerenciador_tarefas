@@ -45,6 +45,7 @@ public class TaskMapper {
         return tasks.stream()
                 .map(task -> TaskDtoResponse.builder()
                         .title(task.getTitle())
+                        .description(task.getDescription())
                         .dateOfCreation(task.getDateOfCreation())
                         .dueDate(task.getDueDate())
                         .priority(task.getPriority())

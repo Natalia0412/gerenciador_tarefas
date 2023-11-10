@@ -1,6 +1,5 @@
 package com.example.gerenciadordetarefas.controller.project;
 
-import com.example.gerenciadordetarefas.dto.department.DepartmentDtoResponse;
 import com.example.gerenciadordetarefas.dto.project.ProjectDto;
 import com.example.gerenciadordetarefas.dto.project.ProjectDtoResponse;
 import com.example.gerenciadordetarefas.dto.task.TaskInfoDto;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class ProjectControllerTest {
     @InjectMocks
@@ -82,11 +79,11 @@ class ProjectControllerTest {
             .description("Este app vai ajudar a pessoas a se organizar nos estudos")
             .taskList(new ArrayList<>())
             .build();
-    private final List<ProjectDtoResponse> projectDtoResponse () {
+    private List<ProjectDtoResponse> projectDtoResponse () {
         List<ProjectDtoResponse> projectDtoResponseList = new ArrayList<>();
-              projectDtoResponseList.add(projectDtoResponse1);
-              projectDtoResponseList.add(projectDtoResponse2);
-              return  projectDtoResponseList;
+        projectDtoResponseList.add(projectDtoResponse1);
+        projectDtoResponseList.add(projectDtoResponse2);
+        return  projectDtoResponseList;
     }
 
 
@@ -133,15 +130,17 @@ class ProjectControllerTest {
     @Test
     @DisplayName("Verify GET method")
     void returnAllProjects() {
-        ResponseEntity<ProjectDtoResponse> responseEntity = projectController.getById(PROJECT_ID_1);
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        Assertions.assertEquals(projectDtoResponse1, responseEntity.getBody());
-        for (int i=0; i<projectDtoResponse1.getTaskList().size(); i++){
-            TaskInfoDto  expect =projectDtoResponse1.getTaskList().get(i);
-            TaskInfoDto actual = responseEntity.getBody().getTaskList().get(i);
-            Assertions.assertEquals(expect.getIdTask(), actual.getIdTask());
-            Assertions.assertEquals(expect.getTitle(), actual.getTitle());
-            Assertions.assertEquals(expect.getAssigne(), actual.getAssigne());
+        ResponseEntity<List<ProjectDtoResponse>> responseEntity = projectController.returnAllProjects();
+        List<ProjectDtoResponse> body = responseEntity.getBody();
+        Assertions.assertNotNull(body);
+        Assertions.assertEquals(projectDtoResponse().size(), body.size());
+        for (int i=0; i<projectDtoResponse().size(); i++){
+            ProjectDtoResponse  expect =projectDtoResponse().get(i);
+            ProjectDtoResponse  actual = body.get(i);
+            Assertions.assertEquals(expect.getId(), actual.getId());
+            Assertions.assertEquals(expect.getName(), actual.getName());
+            Assertions.assertEquals(expect.getDescription(), actual.getDescription());
+            Assertions.assertEquals(expect.getTaskList(), actual.getTaskList());
         }
         Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
