@@ -29,7 +29,6 @@ public class TaskService {
 
     public TaskDtoResponse createTask(TaskDto taskDto) {
         Task task = TaskMapper.taskDtoToTask(taskDto);
-
         this.addToAssigne(taskDto, task);
         taskRepository.save(task);
         return TaskMapper.taskToTaskDtoResponse(task);
