@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,9 +29,8 @@ import static org.mockito.Mockito.verify;
 class TaskServiceTest {
     @Mock
     private TaskRepository repository;
-
     @InjectMocks
-    private  TaskService service;
+    private  TaskService service ;
 
     @Mock
     private UserService userService;
@@ -62,8 +63,8 @@ class TaskServiceTest {
 
     @BeforeEach
     void setUp() {
-        // MockitoAnnotations.initMocks(this);
-        service = new TaskService(userService);
+
+
         Mockito.lenient().when(userService.getUserById(USER_ID_1)).thenReturn(user1);
         Mockito.lenient().when(repository.save(Mockito.any(Task.class))).thenReturn(task);
         Mockito.lenient().when(repository.findById(TASK_ID_1)).thenReturn(Optional.of(task));
