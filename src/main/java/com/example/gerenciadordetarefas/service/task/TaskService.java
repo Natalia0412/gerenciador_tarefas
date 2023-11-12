@@ -7,7 +7,6 @@ import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.task.TaskRepository;
 import com.example.gerenciadordetarefas.service.user.UserService;
 import com.example.gerenciadordetarefas.util.exception.ResourceNotFoundException;
-import com.example.gerenciadordetarefas.util.mapper.project.ProjectMapper;
 import com.example.gerenciadordetarefas.util.mapper.task.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -17,12 +16,13 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     private final UserService userService;
+
     @Autowired
-    public TaskService(@Lazy UserService userService) {
+    public TaskService(@Lazy UserService userService, TaskRepository taskRepository) {
         this.userService = userService;
+        this.taskRepository = taskRepository;
     }
 
 
