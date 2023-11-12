@@ -1,6 +1,7 @@
 package com.example.gerenciadordetarefas.service.task;
 
 import com.example.gerenciadordetarefas.dto.task.TaskDto;
+import com.example.gerenciadordetarefas.dto.task.TaskDtoResponse;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.repository.task.TaskRepository;
@@ -15,30 +16,31 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskRepository taskRepository;
     private final UserService userService;
+
     @Autowired
-    public TaskService(@Lazy UserService userService) {
+    public TaskService(@Lazy UserService userService, TaskRepository taskRepository) {
         this.userService = userService;
+        this.taskRepository = taskRepository;
     }
 
 
 
-    public Task createTask(TaskDto taskDto) {
+    public TaskDtoResponse createTask(TaskDto taskDto) {
         Task task = TaskMapper.taskDtoToTask(taskDto);
-
         this.addToAssigne(taskDto, task);
-
-        return taskRepository.save(task);
+        taskRepository.save(task);
+        return TaskMapper.taskToTaskDtoResponse(task);
     }
 
-    public Task updateTask(TaskDto dto, String id) {
+    public TaskDtoResponse updateTask(TaskDto dto, String id) {
         this.getTaskById(id);
         Task task = TaskMapper.taskDtoToTask(dto);
         this.addToAssigne(dto, task);
         task.setId(id);
-        return taskRepository.save(task);
+        taskRepository.save(task);
+        return TaskMapper.taskToTaskDtoResponse(task);
     }
 
     public Task addToAssigne(TaskDto taskDto, Task task){
@@ -52,6 +54,15 @@ public class TaskService {
 
     public Task getTaskById(String id) {
         return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found, id: ", id));
+    }
+
+    public TaskDtoResponse getTaskByIdResponse(String id) {
+        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found, id: ", id));
+        return TaskMapper.taskToTaskDtoResponse(task);
+    }
+
+    public List<TaskDtoResponse> getAllTasks() {
+        return TaskMapper.taskToTaskDtoResponse(taskRepository.findAll());
     }
 
     public void deleteTask(String id){

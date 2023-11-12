@@ -1,6 +1,7 @@
 package com.example.gerenciadordetarefas.service.project;
 
 import com.example.gerenciadordetarefas.dto.project.ProjectDto;
+import com.example.gerenciadordetarefas.dto.project.ProjectDtoResponse;
 import com.example.gerenciadordetarefas.model.project.Project;
 import com.example.gerenciadordetarefas.model.task.Task;
 import com.example.gerenciadordetarefas.repository.project.ProjectRepository;
@@ -20,33 +21,42 @@ public class ProjectService {
     @Autowired
     private TaskService taskService;
 
-    public Project createProject(ProjectDto projectDto){
+    public ProjectDtoResponse createProject(ProjectDto projectDto){
 
         Project project = ProjectMapper.projectDtoToProject(projectDto);
         if(projectDto.getAssignedTasks() != null){
             this.addToAssignedTask(projectDto, project);
         }
         projectRepository.save(project);
-        return project;
+        return ProjectMapper.projectToProjectDtoResponse(project);
 
     }
 
-    public Project updateProject(ProjectDto projectDto, String id){
+    public ProjectDtoResponse updateProject(ProjectDto projectDto, String id){
         this.getProjectById(id);
         Project project = ProjectMapper.projectDtoToProject(projectDto);
         this.addToAssignedTask(projectDto, project);
         project.setId(id);
-        return projectRepository.save(project);
+        projectRepository.save(project);
+        return ProjectMapper.projectToProjectDtoResponse(project);
 
     }
 
-    public List<Project> getAllProject(){
-        return projectRepository.findAll();
+    public List<ProjectDtoResponse> getAllProject(){
+        return ProjectMapper.projectToProjectDtoResponse(projectRepository.findAll());
+
     }
-    public Project getProjectById(String id){
+
+    public ProjectDtoResponse getProjectByIdResponse(String id){
       Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project not found with id: " , id));
+        return ProjectMapper.projectToProjectDtoResponse(project);
+    }
+
+    public Project getProjectById(String id){
+        Project project = projectRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project not found with id: " , id));
         return project;
     }
+
 
     public Project addToAssignedTask(ProjectDto projectDto, Project project){
         List<String> assignedTasks = projectDto.getAssignedTasks();

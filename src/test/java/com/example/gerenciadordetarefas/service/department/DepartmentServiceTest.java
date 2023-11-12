@@ -186,6 +186,13 @@ class DepartmentServiceTest {
     }
 
     @Test
+    @DisplayName("Trazer Departamento através do ID, pois, esse é o da controller")
+    void getDepartmentByIdResponse() {
+        departmentService.getDepartmentByIdResponse(DPTO_ID_1);
+        verify(departmentRepository, times(1)).findById(Mockito.anyString());
+    }
+
+    @Test
     @DisplayName("Trazer todos os departamentos")
     void getAllDepartment() {
         departmentService.getAllDepartment();

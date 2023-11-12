@@ -1,17 +1,17 @@
 package com.example.gerenciadordetarefas.dto.department;
 
+import com.example.gerenciadordetarefas.dto.user.UserInfoDto;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@SuperBuilder
-@NoArgsConstructor
+
 @Data
-public class DepartmentDto {
+@Builder
+public class DepartmentDtoResponse {
+    private String id;
     private String name;
     private String description;
-    private List<String> users;
+    private List<UserInfoDto> users;
 }

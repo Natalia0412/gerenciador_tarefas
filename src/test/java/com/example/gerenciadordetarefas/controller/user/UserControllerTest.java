@@ -2,7 +2,6 @@ package com.example.gerenciadordetarefas.controller.user;
 
 import com.example.gerenciadordetarefas.dto.user.UserDto;
 import com.example.gerenciadordetarefas.dto.user.UserDtoResponse;
-import com.example.gerenciadordetarefas.model.user.User;
 import com.example.gerenciadordetarefas.service.user.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,6 +108,7 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("Verify Delete method")
     void deleteUser() {
         ResponseEntity<?> responseEntity = userController.deleteUser(USER_ID_1);
         Assertions.assertEquals(HttpStatus.NO_CONTENT, responseEntity.getStatusCode());

@@ -1,31 +1,27 @@
 package com.example.gerenciadordetarefas.dto.task;
-
+import com.example.gerenciadordetarefas.dto.user.UserInfoDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class TaskDto {
+public class TaskDtoResponse {
+    private String id;
     private String title;
     private String description;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dateOfCreation;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dueDate;
     private String priority;
-    @NotNull(message = "Assigne is mandatory")
-    private List<String> assigne ;
-    //private String department;
-
+    private List<UserInfoDto> assigne;
 
 
 }
