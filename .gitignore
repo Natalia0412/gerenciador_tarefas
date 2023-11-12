@@ -34,3 +34,12 @@ build/
 
 ### Local Configuration ###
 .env
+
+#docker
+.dockerignore
+/db
+.docker/
+.m2/
+# Arquivos gerados pelo Docker
+*.log
+*.tar

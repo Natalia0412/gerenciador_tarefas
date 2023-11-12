@@ -1,4 +1,0 @@
-spring:
-  data:
-    mongodb:
-      uri: mongodb+srv://${USER_NAME}:${PASSWORD}@gerenciadordetarefas.mwfo8de.mongodb.net/${BD}?retryWrites=true&w=majority
