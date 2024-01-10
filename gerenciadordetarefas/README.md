@@ -16,6 +16,8 @@
 
 O gerenciador de tarefas é uma api onde se pode inserir, alterar, listar e excluir tarefas e usuários.
 Também pode associar usuário a tarefa e tarefa ao usuário.
+Outro ponto  é pode criar, alterar, excluir ou listar  projetos e departamentos, onde projeto
+esta associado com tarefa e deparatmaneto com usuário.
 
 ## Descrição para uso do  Docker
 Se já possui o Docker instalado  basta seguir os passos abaixo:
@@ -940,28 +942,6 @@ Response :
     }
 ]
 ```
-Deploy: Deploy was done in the render
-- https://challengefour.onrender.com
-- https://challengefour.onrender.com/api/v1/clients
-
-
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-
-
-
 
 ## Entrar em contato
 
