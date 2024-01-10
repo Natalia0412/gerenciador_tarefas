@@ -31,7 +31,8 @@ Se já possui o Docker instalado  basta seguir os passos abaixo:
     docker-compose up -d
 
     ```
-4. Acesse o aplicativo:
+4. Também é importante criar uma pasta chamada db no mesmo repositório de docker-compose.yml, pois ela é responsável por armazenar o volume
+5. Acesse o aplicativo:
    - Após o processo de inicialização ser concluído, você deve poder acessar o aplicativo no navegador ou na porta especificada no arquivo docker-compose.yml.
 
 ## Test
