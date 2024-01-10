@@ -941,12 +941,7 @@ Deploy: Deploy was done in the render
 - https://challengefour.onrender.com
 - https://challengefour.onrender.com/api/v1/clients
 
-## Installation
 
-```bash
-$ docker build -t nome_da_imagem .
-
-```
 
 ## Running the app
 
