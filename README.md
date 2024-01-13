@@ -14,10 +14,15 @@
 
 ## API para gerenciar tarefas 
 
+
 O gerenciador de tarefas é uma api onde se pode inserir, alterar, listar e excluir tarefas e usuários.
 Também pode associar usuário a tarefa e tarefa ao usuário.
 Outro ponto  é pode criar, alterar, excluir ou listar  projetos e departamentos, onde projeto
 esta associado com tarefa e deparatmaneto com usuário.
+
+## Demonstração da API em vídeo
+https://www.linkedin.com/posts/natalia-barros-a78316143_java-springboot-mongodb-activity-7151776874510114816-tJpm?utm_source=share&utm_medium=member_desktop
+
 
 ## Descrição para uso do  Docker
 Se já possui o Docker instalado  basta seguir os passos abaixo:
